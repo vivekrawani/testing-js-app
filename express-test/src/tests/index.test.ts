@@ -54,7 +54,7 @@ describe("POST /division", () => {
         a: 5,
         b: 0
       });
-      expect(res.statusCode).toBe(422);
+      expect(res.statusCode).toBe(400);
       expect(res.body).toStrictEqual( {message : "Cannot divide by 0"});
     });
 });

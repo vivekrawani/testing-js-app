@@ -1,22 +1,17 @@
 
 import express, {Request, Response, NextFunction} from "express";
 import fsPromise from "node:fs/promises"
+import {z} from "zod";
 
 const app = express();
 app.use(express.json());
 app.use(logger)
 
+const divisionBody = z.object({
+    a : z.number(),
+    b : z.number()
+})
 
-
-export function division(a : number, b : number){
-    if(b === 0){
-        throw new Error("Cannot divide by 0");
-        
-    }
-    const quotient = Math.floor(a/ b);
-    const remainder = 1 % b;
-    return {quotient, remainder};
-}
 
 app.post("/sum", (req, res) => {
     const a = req.body.a;
@@ -29,25 +24,32 @@ app.post("/sum", (req, res) => {
 });
 
 app.post("/division", (req, res)=>{
-
-    const a = req.body.a;
-    const b = req.body.b;
-    
-    if(b === 0){
-        res.status(422)
+    const parsedBody = divisionBody.safeParse(req.body);
+    if(!parsedBody.success){
+        res.status(400)
+        .json({
+            message : "Invalid input"
+        }) 
+    } else if(parsedBody.data.b === 0){
+        res.status(400)
         .json({
             message : "Cannot divide by 0"
         })
-        
-    }
-    const quotient = Math.floor(a/ b);
-    const remainder = 1 % b;
-    res.status(200)
+    } else {
+        const a = parsedBody.data.a;
+        const b = parsedBody.data.b;
+        const quotient = Math.floor(a/ b);
+        const remainder = 1 % b;
+        res.status(200)
         .json({
             result : {
                 quotient, remainder
             }
         })
+    }
+
+      
+   
 })
 
 app.get("/", (req,res)=>{
