@@ -19,8 +19,8 @@ app.post("/sum", async(req, res) => {
 
   const ret = await dbClient.result.create({
     data: {
-      a: a,
-      b: b,
+      a: b,
+      b: a,
       result: answer,
     },
   });
