@@ -1,0 +1,1 @@
+export const utilFn = ()=> ({message : "This is rom real util"})
