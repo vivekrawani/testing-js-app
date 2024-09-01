@@ -1,8 +1,8 @@
-
+// adding this comment to create a pull request
 export function sum(a: number, b: number) {
     return a + b
 }
-//added a comment
+
 export function division(a : number, b : number){
     if(b === 0){
         throw new Error("Cannot divide by 0");
