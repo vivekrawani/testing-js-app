@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import request from "supertest";
 import { app } from "../index"
 
-
+/*
 vi.mock("../db", () => ({
   dbClient: {
     sum: { create: vi.fn() },
@@ -15,6 +15,8 @@ vi.mock("../db", () => ({
     }
   }
 }))
+*/
+vi.mock("../db")
 
 describe("GET /", () => {
   it("Should return the server status", async () => {
